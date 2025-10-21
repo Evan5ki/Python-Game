@@ -1,18 +1,5 @@
 import pygame
-
-
-
-#################################################################################
-###########################INITIALIZATION CONDITIONS#############################
-pygame.init() # pygame setup
-Width = 1080
-Height = 700
-screen = pygame.display.set_mode((Width, Height))
-clock = pygame.time.Clock() #initializes the internal clock for frames and shtuff
-running = True #flag for game to run
-pygame.display.set_caption("Scrolling Background")
-#################################################################################
-
+from Game import Width, Height, screen
 background_image = pygame.image.load("Assets/stars.jpg").convert()
 background_image = pygame.transform.scale(background_image, (Width, Height))
 backy = 0
