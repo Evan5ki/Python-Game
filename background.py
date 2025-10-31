@@ -4,8 +4,8 @@ import pygame
 pygame.init()
 
 background = 'Assets/stars.jpg' # change for a new background
-Width = 500 #graphics
-Height = 500
+Width = 1000 #graphics
+Height = 700
 
 
 screen = pygame.display.set_mode((Width, Height))
