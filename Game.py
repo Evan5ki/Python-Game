@@ -11,20 +11,19 @@ running = True #flag for game to run
 pygame.display.set_caption("Scrolling Background")
 #################################################################################
 
-
 build_level(Level)
 
 while running:
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
+            
     drawing()#calls background.py to create the scrolling background
     build_level(Level)
     load_P1()
-    move()
+    move(clock.tick(60))
 
     pygame.display.flip() # Update the full display Surface to the screen
-    clock.tick(100) # Control frame rate
+    clock.tick(60) # Control frame rate
 
 pygame.quit()

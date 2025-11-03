@@ -1,24 +1,35 @@
 import pygame
-from Level_builder import wall_rect
-from Player_1 import P1_Rect
+import math
 pygame.init()
+from Player_1 import player
 
 
 
-player = {"x": 0, "y": 0, "speed": 0.05}
+def move(clock):
 
-def move():
+    dt = clock / 1000
+
     keys = pygame.key.get_pressed()
+
+    dx, dy = 0, 0
     if keys[pygame.K_w]:
-        if(P1_Rect.colliderect(wall_rect)):
-            player["y"] -= player["speed"]
-        else:
-            player["y"] += player["speed"]
-    elif keys[pygame.K_a]:
-        player["x"] += player["speed"]
-    elif keys[pygame.K_s]:
-        player["y"] -= player["speed"]
-    elif keys[pygame.K_d]:
-        player["x"] -= player["speed"]
+        dy += 1
+    if keys[pygame.K_s]:
+        dy -= 1
+    if keys[pygame.K_a]:
+        dx += 1
+    if keys[pygame.K_d]:
+        dx -= 1
+
+    # --- Normalize diagonal movement ---
+    if dx != 0 or dy != 0:
+        length = math.sqrt(dx ** 2 + dy ** 2)
+        dx /= length
+        dy /= length
+
+    player["x"] += dx * player["speed"] * dt
+    player["y"] += dy * player["speed"] * dt
+
+    
 
 

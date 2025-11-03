@@ -5,6 +5,7 @@ pygame.init()
 
 P1 = 'Assets/Level Assets/PNG/Hitman 1/hitman1_gun.png'
 
+player = {"x": 0, "y": 0, "speed": 7}
 
 P1_Image = pygame.image.load(P1).convert_alpha()#loads image without background
 P1_Width, P1_Height = P1_Image.get_size() #loads the values of the image width and height

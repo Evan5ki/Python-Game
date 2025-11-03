@@ -18,7 +18,7 @@ back_y = 0
 back_y1 = -background_image.get_height() 
 back_x = 0
 back_x1 = -background_image.get_width()
-scroll_speed = 0.25
+scroll_speed = 0.5
 
 
 
