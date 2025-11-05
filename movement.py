@@ -1,17 +1,20 @@
 import pygame
 import math
+import globals
+
+
+
 pygame.init()
-from Player_1 import player
 
+clock = pygame.time.Clock()
+clock = clock.tick(60)
 
+def move():
+    dt = clock / 1000 #counts the amount of frames since last call of this function
 
-def move(clock):
-
-    dt = clock / 1000
-
-    keys = pygame.key.get_pressed()
-
-    dx, dy = 0, 0
+    keys = pygame.key.get_pressed() #Returns state of all keys on the keyboard
+    
+    dx, dy = 0, 0 #Translation values
     if keys[pygame.K_w]:
         dy += 1
     if keys[pygame.K_s]:
@@ -22,14 +25,10 @@ def move(clock):
         dx -= 1
 
     # --- Normalize diagonal movement ---
-    if dx != 0 or dy != 0:
-        length = math.sqrt(dx ** 2 + dy ** 2)
+    if dx != 0 or dy != 0: 
+        length = math.sqrt(dx ** 2 + dy ** 2) 
         dx /= length
         dy /= length
-
-    player["x"] += dx * player["speed"] * dt
-    player["y"] += dy * player["speed"] * dt
-
+    globals.P1.x += dx * globals.P1.speed * dt
+    globals.P1.y += dy * globals.P1.speed * dt
     
-
-

@@ -1,9 +1,11 @@
 import pygame
 from background import Width, Height, screen
-from movement import player
+from globals import P1
+
 pygame.init()
 
 tile_size = 100
+scale = tile_size/64
 
 ###############################################ASSET INITIALIZATION####################################
 Asset_paths = [
@@ -15,16 +17,19 @@ Asset_paths = [
 Asset_names = [
     'wall_side', 'wall_up', 'floor','uleft_corner', 'lleft_corner', 'uright_corner', 'lright_corner', 'cwall_l', 
     'cwall_r', 'cwall_u', 'cwall_d'
-]
+    ]
 Assets = {}
-scale = tile_size/64
 
 for i, value in enumerate(Asset_paths):
-    Assets[Asset_names[i]] = pygame.image.load(value)
+    name = Asset_names[i]
+    image = pygame.image.load(value)
+    image = pygame.transform.rotozoom(image,0,scale)
+    rect = image.get_rect(center = (tile_size//2,tile_size//2))
 
-for i, value in enumerate(Asset_names):
-    Assets[Asset_names[i]] = pygame.transform.rotozoom(Assets[Asset_names[i]],0,scale)
-
+    Assets[name] = {
+        "image": image,
+        "rect" : rect
+    }
 
 ###############################################ASSET INITIALIZATION####################################
 
@@ -37,7 +42,7 @@ def build_level(level): #builds the level by calling build tile for each element
 
     for y, row in enumerate(level):
         for x, cell in enumerate(row):
-            build_tile(x + player["x"], y + player["y"], cell, offset_x, offset_y)
+            build_tile(x + P1.x, y + P1.y, cell, offset_x, offset_y)
 
 
 def build_tile(x, y, tile_type, offset_x, offset_y): #Builds each tile in the correct location
@@ -46,7 +51,20 @@ def build_tile(x, y, tile_type, offset_x, offset_y): #Builds each tile in the co
     pos_y = offset_y + y * tile_size
     
     if tile_type in Assets:
-        screen.blit(Assets[tile_type], (pos_x, pos_y))
-    else:
-        pass
-    
+        image = Assets[tile_type]["image"]
+        tile_rect = image.get_rect(topleft=(pos_x, pos_y))
+        if hasattr(P1, "rect") and P1.rect.colliderect(tile_rect) and tile_type != "floor": #Checks how a tile is overlapped with the player
+            if P1.rect.bottom > tile_rect.top and P1.rect.top < tile_rect.top:
+                print("Player hit tile from top")
+                
+            elif P1.rect.top < tile_rect.bottom and P1.rect.bottom > tile_rect.bottom:
+                print("Player hit tile from bottom")
+                
+            elif P1.rect.right > tile_rect.left and P1.rect.left < tile_rect.left:
+                print("Player hit tile from left")
+                
+            elif P1.rect.left < tile_rect.right and P1.rect.right > tile_rect.right:
+                print("Player hit tile from right")
+        # Draws the tile
+        screen.blit(image, (pos_x, pos_y))
+

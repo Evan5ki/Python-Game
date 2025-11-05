@@ -1,9 +1,8 @@
 import pygame
 from background import drawing
-from Player_1 import load_P1
 from Level_builder import build_level
 from movement import move
-from Levels import Level
+from globals import P1, Level
 ###########################INITIALIZATION CONDITIONS#############################
 pygame.init() # pygame setup
 clock = pygame.time.Clock() #initializes the internal clock for frames and shtuff
@@ -20,8 +19,8 @@ while running:
             
     drawing()#calls background.py to create the scrolling background
     build_level(Level)
-    load_P1()
-    move(clock.tick(60))
+    P1.draw()
+    move()
 
     pygame.display.flip() # Update the full display Surface to the screen
     clock.tick(60) # Control frame rate
