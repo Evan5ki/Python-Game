@@ -6,55 +6,36 @@ class Player:
     def __init__(self, speed, health, path, x, y):
         self.speed = speed
         self.health = health
-        self.path = path
         self.x = x
         self.y = y
+        self.image = pygame.image.load(path).convert_alpha()
 
-        self.image = pygame.image.load(self.path).convert_alpha()
-        self.mask = pygame.mask.from_surface(self.image)
+        # Fixed collision rect (does not rotate)
+        self.rect = self.image.get_rect(center=(Width // 2, Height // 2))
         self.angle = 0
-        self.update_render()
+        self.render = self.image  # start with unrotated sprite
 
     def update_render(self):
-        """Update the player's rotated image and rect based on mouse angle."""
+        """Rotate the player's image visually, but keep rect fixed."""
         self.angle = self.get_angle()
+
+        # Rotate sprite only for drawing
         rotated_image = pygame.transform.rotate(self.image, self.angle)
-        center = (Width / 2, Height / 2)
-        self.rect = rotated_image.get_rect(center=center)
+
+        # Get a rect for drawing the rotated image, centered on the fixed rect
         self.render = rotated_image
+        self.render_rect = rotated_image.get_rect(center=self.rect.center)
 
     def draw(self):
-        """Draw the player"""
+        """Draw the player."""
         self.update_render()
-        screen.blit(self.render, self.rect)
 
-        mask_surface = self.mask.to_surface(setcolor=(255, 255, 255),
-                                            unsetcolor=(0, 0, 0, 0))
-        mask_surface.set_alpha(100)
-        mask_surface = pygame.transform.rotate(mask_surface, self.angle)
-        screen.blit(mask_surface, self.rect)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        screen.blit(self.render, self.render_rect)
 
 
     def get_angle(self):
         """Calculate the rotation angle between player center and mouse position."""
         mx, my = pygame.mouse.get_pos()
-        dx = mx - Width / 2
-        dy = my - Height / 2
+        dx = mx - self.rect.centerx
+        dy = my - self.rect.centery
         return -math.degrees(math.atan2(dy, dx))
