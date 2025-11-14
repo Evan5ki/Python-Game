@@ -6,6 +6,8 @@ Tasks:
   - [x] Movement
   - [x] Background
   - [x] Look Physics
-  - [ ] Level Collision
+  - [x] Level Collision
   - [ ] Enemies
   - [ ] Score Counter
+  - [ ] Health bar
+  - [ ] load image
