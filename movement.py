@@ -1,20 +1,14 @@
 import pygame
 import math
-from globals import P1, solid_tiles, Assets
+from globals import P1, solid_tiles, debug_settings
 from background import screen
-
-
-
 
 pygame.init()
 
-clock = pygame.time.Clock()
 
-debug_settings = True
-
-def move():
-
-    dt = clock.tick(60) / 1000 #counts the amount of frames since last call of this function
+def move(dt, clock):
+    
+     #counts the amount of frames since last call of this function
 
     keys = pygame.key.get_pressed() #Returns state of all keys on the keyboard
     
@@ -44,36 +38,20 @@ def move():
         dy /= length
 
 
-    copy_rect = P1.rect.copy()
+    P1.x += dx * P1.speed * dt
+    P1.y += dy * P1.speed * dt
 
-    copy_rect.x += -4 * dx
-    copy_rect.y += -4 * dy
-    x_hit = False
-    y_hit = False
-    i = 0
-    for tile in solid_tiles:
-        if copy_rect.colliderect(tile):
-            if copy_rect.top <= tile.rect.bottom and P1.rect.top > tile.rect.bottom:
-                i+=1
-                print(i)
-            x_hit = True
-            y_hit = True
-            
-    if not x_hit and not y_hit:
-        P1.x += dx * P1.speed * dt
-        P1.y += dy * P1.speed * dt
-
-
+##########################four thin squares placed at edges for collision########################
 
     if debug_settings:
         font = pygame.font.Font(None, 30)
-        text_surface = font.render(f"Dx: {int(P1.x)}", True, (255, 255, 255))
+        text_surface = font.render(f"Dx: {dx * P1.speed * dt} Dy: {dy * P1.speed * dt} Px: {P1.x} Py: {P1.y}", True, (255, 255, 255))
         text_rect = text_surface.get_rect(midleft=(10, 20))
 
         screen.blit(text_surface, text_rect)
-        font = pygame.font.Font(None, 30)
-        text_surface = font.render(f"Dy: {int(P1.y)}", True, (255, 255, 255))
-        text_rect = text_surface.get_rect(midleft=(10, 40))
 
+        font = pygame.font.Font(None, 30)
+        text_surface = font.render(f"Frames: {int(clock.get_fps())}", True, (255, 255, 255))
+        text_rect = text_surface.get_rect(midleft=(800, 20))
         screen.blit(text_surface, text_rect)
 

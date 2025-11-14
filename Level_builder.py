@@ -1,8 +1,10 @@
 import pygame
 from background import Width, Height, screen
-from globals import P1, Asset_paths, Asset_names, Assets, solid_tiles
+from globals import P1, Asset_paths, Asset_names, Assets, solid_tiles, Level, enemies
 from background import screen
 from Tile import Tile
+import random
+from Enemy import Enemy
 
 
 pygame.init()
@@ -19,12 +21,28 @@ for i, value in enumerate(Asset_paths):
     image = pygame.transform.rotozoom(image,0,scale)
     rect = image.get_rect(center = (tile_size//2,tile_size//2))
     mask = pygame.mask.from_surface(image)
+    
 
     Assets[name] = {
         "image": image,
         "rect" : rect,
         "mask" : mask
     }
+
+i = 0
+while len(enemies) == 0:
+    for y, row in enumerate(Level):
+        for x, cell in enumerate(row):
+            if cell == 'floor':
+                if random.randint(0,100) > 90:
+                    enemy = Enemy(x,y)
+                    i += 1
+                    enemies[i] = {
+                        "x" : x,
+                        "y" : y,
+                        "version" : enemy
+                    }
+
 ###############################################ASSET INITIALIZATION####################################
 
 def build_level(level): #builds the level by calling build tile for each element in the level list
@@ -37,6 +55,7 @@ def build_level(level): #builds the level by calling build tile for each element
     for y, row in enumerate(level):
         for x, cell in enumerate(row):
             build_tile(x + P1.x, y + P1.y, cell, offset_x, offset_y)
+            
 
             
             
@@ -52,37 +71,23 @@ def build_tile(x, y, tile_type, offset_x, offset_y):
         if tile_type != "floor":
             newTile = Tile(pos_x, pos_y, tile_rect)
         screen.blit(image, tile_rect)
+        for i in enemies:
+                if enemies[i]['x'] + P1.x == x and enemies[i]['y'] + P1.y == y:
+                   try:
+                    enemies[i]['version'].x = enemies[i]['x'] - P1.x
+                    enemies[i]['version'].y = enemies[i]['y'] + P1.y
+                    screen.blit(enemies[i]['version'].image, tile_rect)
+                   except:
+                       pass
         try:
             solid_tiles.append(newTile)
         except:
             pass
 
-        ########## Collision recognition should pull info here or from this file
+
+
         
-        
+
+               
     
 
-
-
-
-
-
-
-
-
-
-""" collision stuff to come back to
-if tile_type in Assets:
-        
-        if hasattr(P1, "rect") and P1.rect.colliderect(tile_rect) and tile_type != "floor": #Checks how a tile is overlapped with the player
-            if P1.rect.bottom > tile_rect.top and P1.rect.top < tile_rect.top:
-                print("Player hit tile from top")
-                globals.collision = True
-            elif P1.rect.top < tile_rect.bottom and P1.rect.bottom > tile_rect.bottom:
-                print("Player hit tile from bottom")
-                globals.collision = True
-            elif P1.rect.right > tile_rect.left and P1.rect.left < tile_rect.left:
-                print("Player hit tile from left")
-            elif P1.rect.left < tile_rect.right and P1.rect.right > tile_rect.right:
-                print("Player hit tile from right")
-"""

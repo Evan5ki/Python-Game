@@ -1,6 +1,8 @@
 import pygame
 import math
 from background import screen, Width, Height
+import globals
+
 
 class Player:
     def __init__(self, speed, health, path, x, y):
@@ -9,6 +11,7 @@ class Player:
         self.x = x
         self.y = y
         self.image = pygame.image.load(path).convert_alpha()
+        self.timer = 0
 
         # Fixed collision rect (does not rotate)
         self.rect = self.image.get_rect(center=(Width // 2, Height // 2))
@@ -29,7 +32,6 @@ class Player:
     def draw(self):
         """Draw the player."""
         self.update_render()
-
         screen.blit(self.render, self.render_rect)
 
 
@@ -39,3 +41,17 @@ class Player:
         dx = mx - self.rect.centerx
         dy = my - self.rect.centery
         return -math.degrees(math.atan2(dy, dx))
+    
+    def update(self, dt):
+        if self.timer > 0:
+            self.timer -= dt
+            if self.timer <= 0:
+                globals.attack = False
+                self.image = pygame.image.load('Assets/Level Assets/PNG/Hitman 1/hitman1_stand.png').convert_alpha()
+
+
+    def attack(self):
+        self.timer = 100
+        globals.attack = True
+        self.image = pygame.image.load('Assets\Level Assets\PNG\Hitman 1\hitman1_hold.png').convert_alpha()
+        
