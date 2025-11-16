@@ -1,17 +1,17 @@
 import pygame
 
+# change for a new background
+background = 'Assets/stars.jpg' 
 
-pygame.init()
-
-background = 'Assets/stars.jpg' # change for a new background
-Width = 1000 #graphics
+# Window dimensions
+Width = 1000 
 Height = 700
 
-
+#Initializes the screen for the game
 screen = pygame.display.set_mode((Width, Height))
 
-background_image = pygame.image.load(background).convert()
-background_image = pygame.transform.scale(background_image, (Width, Height))
+#Background Image initialization
+background_image = pygame.transform.scale(pygame.image.load(background).convert(), (Width, Height))
 
 
 back_y = 0
@@ -22,7 +22,7 @@ scroll_speed = 0.5
 
 
 
-def drawing():
+def draw_background():
     global back_x, back_x1, back_y, back_y1
 
     back_y += scroll_speed

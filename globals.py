@@ -2,13 +2,10 @@ from Player_class import Player
 import pygame
 pygame.init()
 
-collision = False
-
-P1 = Player(0.003, 100, 'Assets/Level Assets/PNG/Hitman 1/hitman1_stand.png', 0, 0)
+P1 = Player(0.3, 100, 'Assets/Level Assets/PNG/Hitman 1/hitman1_stand.png')
 
 tile_size = 100
 scale = tile_size/64
-attack = False
 
 debug_settings = True
 Level = [
@@ -20,7 +17,7 @@ Level = [
 ]
 Level_1 = [
     ['uleft_corner', 'wall_side', 'uright_corner'],
-    ['empty', 'empty', 'empty'],
+    ['wall_up', 'floor', 'wall_up'],
     ['lleft_corner', 'wall_side', 'lright_corner']
 ]
 
@@ -40,11 +37,8 @@ Assets = {
 
 }
 
-solid_tiles = [
-
-]
-enemies = {
+built_tiles = [
     
-}
+]
 
 

@@ -1,39 +1,66 @@
 import pygame
 import math
 from background import screen, Width, Height
-import globals
 
 
+top = False
+bottom = False
 class Player:
-    def __init__(self, speed, health, path, x, y):
+    def __init__(self, speed, health, path):
         self.speed = speed
         self.health = health
-        self.x = x
-        self.y = y
-        self.image = pygame.image.load(path).convert_alpha()
+        self.dx = 0
+        self.dy = 0
+        self.x = Width // 2
+        self.y = Height // 2
         self.timer = 0
-
-        # Fixed collision rect (does not rotate)
-        self.rect = self.image.get_rect(center=(Width // 2, Height // 2))
         self.angle = 0
-        self.render = self.image  # start with unrotated sprite
+        self.image = pygame.image.load(path).convert_alpha()
+        self.rect = self.image.get_rect(center=(Width // 2, Height // 2))
+        self.render = self.image
 
-    def update_render(self):
-        """Rotate the player's image visually, but keep rect fixed."""
-        self.angle = self.get_angle()
-
-        # Rotate sprite only for drawing
-        rotated_image = pygame.transform.rotate(self.image, self.angle)
-
-        # Get a rect for drawing the rotated image, centered on the fixed rect
-        self.render = rotated_image
-        self.render_rect = rotated_image.get_rect(center=self.rect.center)
+    def move(self, dt):
+        """Does the calculation for player displacement and passes it out to levelbuilder via main"""
+        keys = pygame.key.get_pressed()
+        self.dy = 0
+        self.dx = 0
+        if keys[pygame.K_w]:
+                self.dy -= 1
+        if keys[pygame.K_s]:
+                self.dy += 1
+        if keys[pygame.K_a]:
+                self.dx -= 1
+        if keys[pygame.K_d]:
+                self.dx += 1
+        if self.dx != 0 or self.dy != 0: 
+            length = math.sqrt(self.dx ** 2 + self.dy ** 2) 
+            self.dx /= length
+            self.dy /= length
+        xaxis = self.dx * self.speed * dt
+        
+        yaxis = self.dy * self.speed * dt
+        if top == True and yaxis < 0:
+             yaxis = 0
+        if bottom == True and yaxis > 0:
+             yaxis = 0####################################WOULD BE TRUE JUST CALLED BEFORE LOGIC HAPPENS FIX TMRW
+        self.x += xaxis
+        self.y += yaxis
+        return xaxis, yaxis
 
     def draw(self):
-        """Draw the player."""
+        """Draws the player after calling the update function"""
         self.update_render()
         screen.blit(self.render, self.render_rect)
+    
+    def update_render(self):
+        """Calls get angle for rotation value then calculates the new rectangles"""
+        self.angle = self.get_angle()
 
+        rotated_image = pygame.transform.rotate(self.image, self.angle)
+
+        self.rect.center = (Width // 2, Height // 2)
+        self.render = rotated_image
+        self.render_rect = rotated_image.get_rect(center = self.rect.center)
 
     def get_angle(self):
         """Calculate the rotation angle between player center and mouse position."""
@@ -42,16 +69,15 @@ class Player:
         dy = my - self.rect.centery
         return -math.degrees(math.atan2(dy, dx))
     
-    def update(self, dt):
-        if self.timer > 0:
-            self.timer -= dt
-            if self.timer <= 0:
-                globals.attack = False
-                self.image = pygame.image.load('Assets/Level Assets/PNG/Hitman 1/hitman1_stand.png').convert_alpha()
+    def check_collision(self, tile_list):
+        for tile in tile_list:
+            if self.rect.colliderect(tile.rect) and tile.name != "floor":
+                if self.rect.top <= tile.rect.bottom and self.rect.bottom > tile.rect.bottom:
+                    print("collide top")
+                    top = True
 
-
-    def attack(self):
-        self.timer = 100
-        globals.attack = True
-        self.image = pygame.image.load('Assets\Level Assets\PNG\Hitman 1\hitman1_hold.png').convert_alpha()
-        
+                if self.rect.bottom >= tile.rect.top and self.rect.top < tile.rect.top:
+                    print("collide bottom")
+                    bottom = True
+                #pygame.draw.rect(screen, (0,255,0), self.rect)
+   
