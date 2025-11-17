@@ -1,6 +1,13 @@
 # Python Game
 My game files for a pyhton based game
 
+Controls:
+  Normal WASD movement
+  Mouse over to look
+  Enemies coming this week
+  Collision also coming this week(Had to redesign the coordinate system because it was garbage)
+  
+  
 Tasks:
   - [x] Level Creation
   - [x] Movement
