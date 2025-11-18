@@ -1,10 +1,9 @@
 import pygame
 import math
 from background import screen, Width, Height
+import globals
 
 
-top = False
-bottom = False
 class Player:
     def __init__(self, speed, health, path):
         self.speed = speed
@@ -27,22 +26,22 @@ class Player:
         if keys[pygame.K_w]:
                 self.dy -= 1
         if keys[pygame.K_s]:
+                
                 self.dy += 1
         if keys[pygame.K_a]:
+                
                 self.dx -= 1
         if keys[pygame.K_d]:
+                
                 self.dx += 1
         if self.dx != 0 or self.dy != 0: 
             length = math.sqrt(self.dx ** 2 + self.dy ** 2) 
             self.dx /= length
             self.dy /= length
+
         xaxis = self.dx * self.speed * dt
-        
         yaxis = self.dy * self.speed * dt
-        if top == True and yaxis < 0:
-             yaxis = 0
-        if bottom == True and yaxis > 0:
-             yaxis = 0####################################WOULD BE TRUE JUST CALLED BEFORE LOGIC HAPPENS FIX TMRW
+
         self.x += xaxis
         self.y += yaxis
         return xaxis, yaxis
@@ -70,14 +69,25 @@ class Player:
         return -math.degrees(math.atan2(dy, dx))
     
     def check_collision(self, tile_list):
+        
+    
         for tile in tile_list:
             if self.rect.colliderect(tile.rect) and tile.name != "floor":
                 if self.rect.top <= tile.rect.bottom and self.rect.bottom > tile.rect.bottom:
                     print("collide top")
-                    top = True
 
-                if self.rect.bottom >= tile.rect.top and self.rect.top < tile.rect.top:
+                elif self.rect.bottom >= tile.rect.top and self.rect.top < tile.rect.top:
                     print("collide bottom")
-                    bottom = True
+                
                 #pygame.draw.rect(screen, (0,255,0), self.rect)
-   
+        for tile in tile_list:
+            if self.rect.colliderect(tile.rect) and tile.name != "floor":
+                if self.rect.midleft <= tile.rect.midright and self.rect.midright > tile.rect.midright:
+                    print("collide left")
+
+                elif self.rect.midright >= tile.rect.midleft and self.rect.midleft < tile.rect.midleft:
+                    print("collide right")
+                    
+                    
+        #if top or bottom and left or right:
+           # return deltay, deltax

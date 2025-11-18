@@ -3,6 +3,7 @@ from background import draw_background
 from Level_builder import build_level, let_there_be_level
 from globals import P1, Level, Level_1
 from debugger import debug
+from Inout import title, end
 ###########################INITIALIZATION CONDITIONS#############################
 pygame.init() # pygame setup
 running = True #flag for game to run
@@ -21,7 +22,7 @@ while running:
     #Sets the target framerate and global clock#
     dt = clock.tick(60)
     ############################################
-
+    
     ##Starts the background sequence ## background.py ##
     draw_background() ##Checked and finished
     ####################################################
@@ -32,14 +33,15 @@ while running:
     TILES = build_level(Level, Playerx, Playery)
     ###############################################################
     P1.check_collision(TILES)
-    let_there_be_level()
     
+    let_there_be_level()
     P1.draw()
 
     #turns on debug settings if True in globals ## debugger.py ##
     debug(clock)
     #############################################################
      
+    #end()
 
 
 

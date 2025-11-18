@@ -48,9 +48,9 @@ def build_level(level, xtrans, ytrans): #builds the level by calling build tile 
 def build_tile(x, y, tile_type, origin, xtrans, ytrans):
     if tile_type != 'empty':
         tile = Tile(Assets[tile_type]["image"],  
-                    (origin[0] + x * tile_size + xtrans, origin[1] + y * tile_size + ytrans), 
+                    [origin[0] + x * tile_size + xtrans, origin[1] + y * tile_size + ytrans], 
                     tile_type)
-        
+        #print(f"xtran: {xtrans}")
         built_tiles.append(tile)
         
 
