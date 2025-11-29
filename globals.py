@@ -1,22 +1,13 @@
-from Player_class import Player
 import pygame
-pygame.init()
-
-P1 = Player(0.3, 100, 'Assets/Level Assets/PNG/Hitman 1/hitman1_stand.png')
-
-tile_size = 100
-scale = tile_size/64
-
-i = 255
-
-
-debug_settings = True
 Level = [
     ['uleft_corner', 'wall_side', 'wall_side', 'wall_side', 'uright_corner', 'empty',     'empty',     'uleft_corner',  'wall_side', 'wall_side', 'uright_corner'],
     ['cwall_d',      'floor',     'floor',     'floor',     'lleft_corner',  'wall_side', 'wall_side', 'lright_corner', 'floor',     'floor',     'wall_up'],
     ['floor',        'floor',     'floor',     'floor',     'floor',         'floor',     'floor',     'floor',         'floor',     'floor',     'wall_up'],
     ['cwall_u',      'floor',     'floor',     'floor',     'uleft_corner',  'wall_side', 'wall_side', 'uright_corner', 'floor',     'floor',     'wall_up'],
     ['lleft_corner', 'wall_side', 'wall_side', 'wall_side', 'lright_corner', 'empty',     'empty',     'lleft_corner',  'wall_side', 'wall_side', 'lright_corner']
+]
+Loaded_Level = [
+
 ]
 Level_1 = [
     ['uleft_corner', 'wall_side', 'uright_corner'],
@@ -43,5 +34,21 @@ Assets = {
 built_tiles = [
     
 ]
+enemy_list = [
+
+]
 
 
+Active_level = Level
+
+bullet_group = pygame.sprite.Group()
+enemy_group = pygame.sprite.Group()
+score = 0
+tile_size = 100
+scale = tile_size/64
+initial = True
+running = True
+
+
+
+debug_settings = False

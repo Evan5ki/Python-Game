@@ -1,8 +1,8 @@
 import pygame
 import math
 from background import screen, Width, Height
-import globals
-
+from globals import Loaded_Level, bullet_group, enemy_group
+from bullet import Bullet
 
 class Player:
     def __init__(self, speed, health, path):
@@ -12,10 +12,13 @@ class Player:
         self.dy = 0
         self.x = Width // 2
         self.y = Height // 2
+        self.xaxis = 0
+        self.yaxis = 0
         self.timer = 0
         self.angle = 0
         self.image = pygame.image.load(path).convert_alpha()
         self.rect = self.image.get_rect(center=(Width // 2, Height // 2))
+        self.rect2 = self.image.get_rect(center = (self.x, self.y))
         self.render = self.image
 
     def move(self, dt):
@@ -24,27 +27,28 @@ class Player:
         self.dy = 0
         self.dx = 0
         if keys[pygame.K_w]:
-                self.dy -= 1
+                if not w:
+                    self.dy -= 1
         if keys[pygame.K_s]:
-                
-                self.dy += 1
+                if not s:
+                    self.dy += 1
         if keys[pygame.K_a]:
-                
-                self.dx -= 1
+                if not a:
+                    self.dx -= 1
         if keys[pygame.K_d]:
-                
-                self.dx += 1
+                if not d:
+                    self.dx += 1
         if self.dx != 0 or self.dy != 0: 
             length = math.sqrt(self.dx ** 2 + self.dy ** 2) 
             self.dx /= length
             self.dy /= length
 
-        xaxis = self.dx * self.speed * dt
-        yaxis = self.dy * self.speed * dt
+        self.xaxis = self.dx * self.speed * dt
+        self.yaxis = self.dy * self.speed * dt
 
-        self.x += xaxis
-        self.y += yaxis
-        return xaxis, yaxis
+        self.x += self.xaxis
+        self.y += self.yaxis
+        return self.xaxis, self.yaxis
 
     def draw(self):
         """Draws the player after calling the update function"""
@@ -68,26 +72,36 @@ class Player:
         dy = my - self.rect.centery
         return -math.degrees(math.atan2(dy, dx))
     
-    def check_collision(self, tile_list):
-        
-    
-        for tile in tile_list:
+    def check_collision(self, player_vectors):
+
+        collision = False
+        global w,a,s,d
+        w = False
+        a = False
+        s = False
+        d = False
+        for tile in Loaded_Level:
             if self.rect.colliderect(tile.rect) and tile.name != "floor":
+                #self.x -= player_vectors[0]
                 if self.rect.top <= tile.rect.bottom and self.rect.bottom > tile.rect.bottom:
-                    print("collide top")
-
-                elif self.rect.bottom >= tile.rect.top and self.rect.top < tile.rect.top:
-                    print("collide bottom")
+                    self.y -= player_vectors[1]
+                    collision = True
+                    return collision
+                if self.rect.bottom >= tile.rect.top and self.rect.top < tile.rect.top:
+                    self.y -= player_vectors[1]
+                    collision = True
+                    return collision
                 
-                #pygame.draw.rect(screen, (0,255,0), self.rect)
-        for tile in tile_list:
-            if self.rect.colliderect(tile.rect) and tile.name != "floor":
-                if self.rect.midleft <= tile.rect.midright and self.rect.midright > tile.rect.midright:
-                    print("collide left")
-
-                elif self.rect.midright >= tile.rect.midleft and self.rect.midleft < tile.rect.midleft:
-                    print("collide right")
-                    
+        for enemy in enemy_group:
+            if self.rect.colliderect(enemy.rect):
+                self.health -= 50
+                
+                 
                     
         #if top or bottom and left or right:
            # return deltay, deltax
+
+    def shoot(self):
+        bullet = Bullet(self.angle)
+        bullet_group.add(bullet)
+        
