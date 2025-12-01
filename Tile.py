@@ -14,7 +14,7 @@ class Tile:
         self.name = tile_name
         if self.name == "floor":
             if len(enemy_group) < 10:
-                if random.randint(0,10) >= 9:
+                if random.randint(0,100) >= 93:
                     self.enemy = Enemy(e_path, coords)
                     enemy_group.add(self.enemy)
 

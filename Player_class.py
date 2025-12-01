@@ -75,9 +75,10 @@ class Player:
         rotated_image = pygame.transform.rotate(self.image, self.angle)
         for bullet in enemy_bullet_group:
             if self.rect.colliderect(bullet.rect):
-                self.health -= 10
+                self.health -= 20
                 hit_sound = pygame.mixer.Sound('Assets/cod-hitmarker-made-with-Voicemod.wav')
                 hit_sound.play()
+                bullet.kill()
         self.rect.center = (Width // 2, Height // 2)
         self.render = rotated_image
         self.render_rect = rotated_image.get_rect(center = self.rect.center)
