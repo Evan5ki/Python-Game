@@ -42,6 +42,7 @@ enemy_list = [
 Active_level = Level
 
 bullet_group = pygame.sprite.Group()
+enemy_bullet_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
 score = 0
 tile_size = 100
@@ -49,6 +50,7 @@ scale = tile_size/64
 initial = True
 running = True
 
-
+xtrans = 0
+ytrans = 0
 
 debug_settings = False

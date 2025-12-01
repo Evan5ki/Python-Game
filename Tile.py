@@ -1,6 +1,6 @@
 import pygame
-from globals import tile_size, scale, Asset_names, enemy_group
-from background import Width, Height, screen
+from globals import enemy_group, enemy_bullet_group, bullet_group
+from background import screen
 from Enemy import Enemy
 import random
 
@@ -19,7 +19,6 @@ class Tile:
 
     def draw(self):
         screen.blit(self.surface, self.rect)
-        pygame.draw.rect(screen, (255,0,0), self.rect, 2)
         try:
             self.enemy.spawn()
         except:
@@ -29,6 +28,12 @@ class Tile:
         self.coords[0] -= xtrans
         self.coords[1] -= ytrans
         self.rect = self.surface.get_rect(topleft = self.coords)
+        for bullet in enemy_bullet_group:
+            if bullet.rect.colliderect(self.rect) and self.name != "floor":
+                bullet.kill()
+        for bullet in bullet_group:
+            if bullet.rect.colliderect(self.rect) and self.name != "floor":
+                bullet.kill()
         try:
             self.enemy.update(self.rect)
         except:

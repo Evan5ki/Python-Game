@@ -1,6 +1,6 @@
 import pygame
-from background import Width, Height, screen
-from globals import Asset_paths, Asset_names, Assets, tile_size, scale, built_tiles, enemy_list, Active_level, Loaded_Level
+from background import Width, Height
+from globals import Asset_paths, Asset_names, Assets, tile_size, scale, Active_level, Loaded_Level
 from Tile import Tile
 
 

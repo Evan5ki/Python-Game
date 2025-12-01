@@ -1,20 +1,19 @@
 import pygame
-from background import draw_background, Width, Height, screen
 from Level_builder import load_level, update_tiles, draw_tiles
 from debugger import debug
 from Player_class import Player
 from Inout import title_screen, end
-from enemy_builder import rand_Spawn, generate_enemies
 from Score import update_score
+from background import draw_background
 import globals
 ###########################INITIALIZATION CONDITIONS#############################
 pygame.init() # pygame setup
  #flag for game to run
-pygame.display.set_caption("PYGAME!")
+pygame.display.set_caption("Hitman.")
 clock = pygame.time.Clock()
 #################################################################################
 
-P1 = Player(0.3, 100, 'Assets/Level Assets/PNG/Hitman 1/hitman1_stand.png')
+P1 = Player(0.3, 100, 'Assets/Level Assets/PNG/Hitman 1/hitman1_silencer.png')
 while globals.running:
     ####Allows to quit the game###########
     ######################################
@@ -35,9 +34,6 @@ while globals.running:
     ###############################################################
     #P1.check_collision(TILES)
     update_tiles(player_vectors[0], player_vectors[1])
-    P1.check_collision(player_vectors)
-    if P1.check_collision(player_vectors):
-        update_tiles(-player_vectors[0]*0, -player_vectors[1]*1)
     #rand_Spawn()
     draw_tiles()
     
@@ -48,9 +44,10 @@ while globals.running:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     P1.shoot()
-    globals.bullet_group.update()
+    globals.bullet_group.update(player_vectors[0], player_vectors[1], P1)
+    globals.enemy_bullet_group.update(player_vectors[0], player_vectors[1], P1)
     P1.draw()
-    update_score()
+    update_score(P1)
     #turns on debug settings if True in globals ## debugger.py ##
     debug(clock, P1)
     #############################################################

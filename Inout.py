@@ -42,6 +42,7 @@ def clean_house(P1):
     P1.health = 100
     globals.enemy_group.empty()
     globals.bullet_group.empty()
+    globals.enemy_bullet_group.empty()
     globals.initial = True
     globals.running = True
     globals.Loaded_Level.clear()

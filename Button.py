@@ -8,7 +8,7 @@ class Button:
         self.text = text
         self.font = pygame.font.Font(None, 50)
         self.width, self.height = self.font.size(self.text)
-        self.rect = pygame.Rect(x, y, self.width, self.height)
+        self.rect = pygame.Rect(x, y, self.width + 10, self.height + 10)
         self.rect.center = (self.x, self.y)
 
     def update(self):
