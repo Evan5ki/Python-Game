@@ -2,11 +2,12 @@
 My game files for a pyhton based game
 
 Controls:
-  Normal WASD movement,
-  Mouse over to look,
-  Shoot enemies to get points,
-  Will restart when you kill all enemies,
-  Avoid bullets and enemies
+  - Normal WASD movement,
+  - Mouse over to look,
+  - Shoot enemies to get points,
+  - Will restart when you kill all enemies,
+  - Avoid bullets and enemies
+  - There is a 2 second delay before the enemies start shooting
 
 <img width="1920" height="1200" alt="title" src="https://github.com/user-attachments/assets/09a32e19-ff32-4770-bb02-a6c8ebfc6235" />
 
