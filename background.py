@@ -4,8 +4,8 @@ import pygame
 background = 'Assets/stars.jpg' 
 
 # Window dimensions
-Width = 1000 
-Height = 700
+Width = 1920
+Height = 1080
 
 #Initializes the screen for the game
 screen = pygame.display.set_mode((Width, Height))

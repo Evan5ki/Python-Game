@@ -23,7 +23,7 @@ class Enemy(pygame.sprite.Sprite):
     
     def shoot(self):
         if self.alive():
-            if (pygame.time.get_ticks() - self.time) > 5000:
+            if (pygame.time.get_ticks() - self.time) > 2000:
                 bullet = Bullet(self.get_p_angle(), self.rect, False)
                 enemy_bullet_group.add(bullet)
     
@@ -37,7 +37,10 @@ class Enemy(pygame.sprite.Sprite):
             if bullet.rect.colliderect(self.rect):
                 self.kill()
                 bullet.kill()
+                hit_sound = pygame.mixer.Sound('Assets/cod-hitmarker-made-with-Voicemod.wav')
+                hit_sound.play()
                 score_update(100)
+                self.rect = 0
 
     def spawn(self):
         if self.alive():

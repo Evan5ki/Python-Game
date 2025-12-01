@@ -8,6 +8,7 @@ from background import draw_background
 import globals
 ###########################INITIALIZATION CONDITIONS#############################
 pygame.init() # pygame setup
+pygame.mixer.init() #pygame mixer setup
  #flag for game to run
 pygame.display.set_caption("Hitman.")
 clock = pygame.time.Clock()

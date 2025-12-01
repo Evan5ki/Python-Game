@@ -17,7 +17,7 @@ class Player:
         self.angle = 0
         self.image = pygame.image.load(path).convert_alpha()
         self.rect = self.image.get_rect(center=(Width // 2, Height // 2))
-        self.bullets = 10
+        self.bullets = 20
         self.render = self.image
 
     def move(self, dt):
@@ -76,6 +76,8 @@ class Player:
         for bullet in enemy_bullet_group:
             if self.rect.colliderect(bullet.rect):
                 self.health -= 10
+                hit_sound = pygame.mixer.Sound('Assets/cod-hitmarker-made-with-Voicemod.wav')
+                hit_sound.play()
         self.rect.center = (Width // 2, Height // 2)
         self.render = rotated_image
         self.render_rect = rotated_image.get_rect(center = self.rect.center)
@@ -110,7 +112,9 @@ class Player:
                 
         for enemy in enemy_group:
             if self.rect.colliderect(enemy.rect):
-                self.health -= 50
+                self.health -= 10
+                hit_sound = pygame.mixer.Sound('Assets/cod-hitmarker-made-with-Voicemod.wav')
+                hit_sound.play()
                 
                  
                     
@@ -122,6 +126,8 @@ class Player:
         if self.bullets < 0:
             self.bullets = 0
         if self.bullets > 0:
+            gun_sound = pygame.mixer.Sound("Assets/gun-gunshot-02.wav")
+            gun_sound.play()
             bullet = Bullet(self.angle, self.rect, True)
             bullet_group.add(bullet)
         

@@ -1,18 +1,63 @@
 import pygame
-Level = [
-    ['uleft_corner', 'wall_side', 'wall_side', 'wall_side', 'uright_corner', 'empty',     'empty',     'uleft_corner',  'wall_side', 'wall_side', 'uright_corner'],
-    ['cwall_d',      'floor',     'floor',     'floor',     'lleft_corner',  'wall_side', 'wall_side', 'lright_corner', 'floor',     'floor',     'wall_up'],
+Level_1 = [
+    # Top wall
+    ['uleft_corner','wall_side','wall_side','wall_side','wall_side','wall_side','wall_side','wall_side',
+     'wall_side','wall_side','wall_side','wall_side','wall_side','wall_side','wall_side','wall_side',
+     'wall_side','wall_side','wall_side','wall_side','wall_side','uright_corner'],
+
+    # Inner floor rows
+    ['wall_up','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','wall_up'],
+
+    ['wall_up','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','wall_up'],
+
+    ['wall_up','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','wall_up'],
+
+    ['wall_up','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','wall_up'],
+
+    ['wall_up','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','wall_up'],
+
+    ['wall_up','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','wall_up'],
+
+    ['wall_up','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','floor','floor','floor',
+     'floor','floor','floor','floor','floor','wall_up'],
+
+    # Bottom wall
+    ['lleft_corner','wall_side','wall_side','wall_side','wall_side','wall_side','wall_side','wall_side',
+     'wall_side','wall_side','wall_side','wall_side','wall_side','wall_side','wall_side','wall_side',
+     'wall_side','wall_side','wall_side','wall_side','wall_side','lright_corner']
+]
+
+
+
+Level_2 = [
+    [ 'empty',     'empty',     'uleft_corner',  'wall_side', 'wall_side', 'uright_corner'],
+    [],
     ['floor',        'floor',     'floor',     'floor',     'floor',         'floor',     'floor',     'floor',         'floor',     'floor',     'wall_up'],
     ['cwall_u',      'floor',     'floor',     'floor',     'uleft_corner',  'wall_side', 'wall_side', 'uright_corner', 'floor',     'floor',     'wall_up'],
     ['lleft_corner', 'wall_side', 'wall_side', 'wall_side', 'lright_corner', 'empty',     'empty',     'lleft_corner',  'wall_side', 'wall_side', 'lright_corner']
 ]
+Level_3 = [
+    ['uleft_corner', 'wall_side', 'wall_side', 'wall_side', 'uright_corner', 'empty',     'empty',     'uleft_corner',  'wall_side', 'wall_side', 'uright_corner'],
+    ['cwall_d',      'floor',     'floor',     'floor',     'lleft_corner',  'wall_side', 'wall_side', 'lright_corner', 'floor',     'floor',     'wall_up'],
+    ['floor',        'floor',     'floor',     'floor',     'floor',         'floor',     'floor',     'floor',         'floor',     'floor',     'wall_up'],
+    ['cwall_u',      'floor',     'floor',     'floor',     'uleft_corner',  'wall_side'],
+    ['lleft_corner', 'wall_side', 'wall_side', 'wall_side', 'lright_corner', 'empty',     'empty',     'lleft_corner',  'wall_side', 'wall_side', 'lright_corner']
+]
 Loaded_Level = [
 
-]
-Level_1 = [
-    ['uleft_corner', 'wall_side', 'uright_corner'],
-    ['wall_up', 'floor', 'wall_up'],
-    ['lleft_corner', 'wall_side', 'lright_corner']
 ]
 
 Asset_paths = [
@@ -38,8 +83,13 @@ enemy_list = [
 
 ]
 
-
-Active_level = Level
+levels = [
+    Level_1,
+    Level_2,
+    Level_3
+]
+i = 0
+Active_level = levels[i]
 
 bullet_group = pygame.sprite.Group()
 enemy_bullet_group = pygame.sprite.Group()

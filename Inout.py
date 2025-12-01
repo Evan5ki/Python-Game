@@ -26,23 +26,27 @@ def end(P1):
                 pygame.quit()
         font = pygame.font.Font(None, 175)
         surface = font.render(f"YOU DIED", True, (255, 0, 0))
+        globals.score = 0
         rect = surface.get_rect(center=(Width//2, Height//2))
         screen.blit(surface, rect)
         restart = Button(Width//2, Height//2 + 150, "PLAY AGAIN")
         restart.update()
         if restart.event_handler():
-            screen.fill((0, 0, 0))
+            
             clean_house(P1)
             break
         pygame.display.flip()
 
 def clean_house(P1):
+    screen.fill((0, 0, 0))
     P1.x = Width // 2
     P1.y = Height // 2
     P1.health = 100
+    P1.bullets = 20
     globals.enemy_group.empty()
     globals.bullet_group.empty()
     globals.enemy_bullet_group.empty()
     globals.initial = True
     globals.running = True
     globals.Loaded_Level.clear()
+    globals.Active_level = globals.levels[0]

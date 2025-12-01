@@ -13,9 +13,10 @@ class Tile:
         self.rect = surface.get_rect(topleft = self.coords)
         self.name = tile_name
         if self.name == "floor":
-            if random.randint(0,10) >= 9:
-                self.enemy = Enemy(e_path, coords)
-                enemy_group.add(self.enemy)
+            if len(enemy_group) < 10:
+                if random.randint(0,10) >= 9:
+                    self.enemy = Enemy(e_path, coords)
+                    enemy_group.add(self.enemy)
 
     def draw(self):
         screen.blit(self.surface, self.rect)
@@ -34,7 +35,7 @@ class Tile:
         for bullet in bullet_group:
             if bullet.rect.colliderect(self.rect) and self.name != "floor":
                 bullet.kill()
-        try:
+        try:   
             self.enemy.update(self.rect)
         except:
             pass

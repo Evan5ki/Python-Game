@@ -2,7 +2,7 @@ import pygame
 from background import Width, Height
 from globals import Asset_paths, Asset_names, Assets, tile_size, scale, Active_level, Loaded_Level
 from Tile import Tile
-
+import globals
 
 
 
@@ -29,10 +29,10 @@ for i, value in enumerate(Asset_paths):
 ###that area. This function then passes it to the load tile function with a the x,y position in the list
 ###the type and the origin calculation
 def load_level(): 
-    level_width = len(Active_level[0]) * tile_size #sets width of the level
-    level_height = len(Active_level) * tile_size #sets height of the level
+    level_width = len(globals.Active_level[0]) * tile_size #sets width of the level
+    level_height = len(globals.Active_level) * tile_size #sets height of the level
     origin = (Width//2 - level_width//2, Height//2 - level_height//2)
-    for y, row in enumerate(Active_level):
+    for y, row in enumerate(globals.Active_level):
         for x, cell in enumerate(row):
             load_tile(x, y, cell, origin)
 
