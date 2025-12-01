@@ -4,7 +4,7 @@ My game files for a pyhton based game
 Controls:
   - Normal WASD movement,
   - Mouse over to look,
-  - Shoot enemies to get points,
+  - Spacebar to Shoot enemies to get points,
   - Will restart when you kill all enemies,
   - Avoid bullets and enemies
   - There is a 2 second delay before the enemies start shooting
